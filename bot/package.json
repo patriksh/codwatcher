@@ -1,0 +1,24 @@
+{
+    "name": "vcod-discord",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "bad-words": "^3.0.4",
+        "discord.js": "^12.0.2",
+        "gamedig": "^3.0.3",
+        "quake3-rcon": "https://github.com/dftd/node-quake3-rcon/tarball/master",
+        "tail": "2.2.1",
+        "then-request": "^6.0.2"
+    },
+    "engines": {
+        "node": "14.x"
+    },
+    "keywords": [
+        "node",
+        "discord"
+    ]
+}

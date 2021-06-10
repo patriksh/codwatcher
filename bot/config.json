@@ -1,0 +1,29 @@
+{
+    "token": "Main bot token",
+    "prefix": "!",
+    "color": "#00E098",
+    "reportChannel": "Report alert channel ID",
+    "banChannel": "Ban alert channel ID",
+    "servers": [
+        {
+            "id": "dm",
+            "name": "Deathmatch",
+            "ip": "127.0.0.0",
+            "port": "28960",
+            "token": "Deathmatch bot token",
+	        "path": "../dm/main/",
+            "pass": "RCON password",
+            "logChannel": "Chat log channel ID"
+        },
+        {
+            "id": "sd",
+            "name": "Search & Destroy",
+            "ip": "127.0.0.0",
+            "port": "28961",
+            "token": "Search & Destroy bot token",
+            "path": "../sd/main/",
+            "pass": "RCON password",
+            "logChannel": "Chat log channel ID"
+        }
+    ]
+}
