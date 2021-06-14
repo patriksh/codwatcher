@@ -8,7 +8,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(bot.config.color)
-            .setTitle('Call of Duty 1.1 Bot')
+            .setTitle('CoD Watcher')
             .addField('Show servers', '`' + prefix + 'servers`', true)
             .addField('Show players', '`' + prefix + 'players <server>`', true)
             .setFooter('Bot by defected.dev');

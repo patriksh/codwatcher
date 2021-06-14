@@ -1,7 +1,7 @@
 {
-    "name": "vcod-discord",
+    "name": "codwatcher",
     "version": "1.0.0",
-    "description": "",
+    "description": "A Discord bot for Call of Duty 1 servers.",
     "main": "app.js",
     "scripts": {
         "start": "node app.js"
@@ -10,15 +10,24 @@
         "bad-words": "^3.0.4",
         "discord.js": "^12.0.2",
         "gamedig": "^3.0.3",
+        "proxycheck-node.js": "^2.0.0-a",
         "quake3-rcon": "https://github.com/dftd/node-quake3-rcon/tarball/master",
         "tail": "2.2.1",
         "then-request": "^6.0.2"
     },
-    "engines": {
-        "node": "14.x"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dftd/codwatcher.git"
     },
     "keywords": [
-        "node",
-        "discord"
-    ]
+        "call-of-duty",
+        "cod1",
+        "discord.js"
+    ],
+    "author": "dftd",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dftd/codwatcher/issues"
+    },
+    "homepage": "https://github.com/dftd/codwatcher#readme"
 }

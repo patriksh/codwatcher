@@ -1,8 +1,5 @@
-/*
- * Bot.
-*/
+// Bot
 const Discord = require('discord.js');
-
 const bot = new Discord.Client();
 bot.config = require('./config.json');
 bot.helper = require('./helper');
@@ -15,7 +12,7 @@ Object.keys(botCommands).map(key => {
 
 bot.login(bot.config.token);
 bot.on('ready', () => {
-    console.info('Bot is ready.');
+    console.info('Bot is online.');
     bot.user.setStatus('online');
 
     statusBots = bot.helper.loginBots(bot);
@@ -39,24 +36,48 @@ bot.on('message', msg => {
     }
 });
 
-/*
- * Reports, badwords, chat log, etc. 
-*/
+// Chat parser 
 const Tail = require('tail').Tail;
 const Filter = require('bad-words');
 const RCON = require('quake3-rcon');
+const proxycheck_node = require('proxycheck-node.js');
 const filter = new Filter();
+let proxycheck = null;
+if(bot.config.proxycheck !== undefined && bot.config.proxycheck !== "") {
+    proxycheck = new proxycheck_node({ api_key: bot.config.proxycheck });
+}
+let checkedIPs = [];
 
-function readChat(bot, server) {
-    let tail = new Tail(server.path + '/vcod-discord.log', "\n", {}, true);
+// To add/remove words from badword check use this.
+// filter.removeWords('word1', 'word2');
+// filter.addWords('word3', 'word4');
+
+function readChat(server) {
+    let tail = new Tail(server.path + '/codwatcher.log', "\n", {}, true);
     let rcon = new RCON({ address: server.ip, port: server.port, password: server.pass });
 
-    tail.on('line', line => {
+    tail.on('line', async line => {
         let data = line.split('%');
         let msg = { authorID: data[0], authorName: data[1], content: data[2] };
 
-        if(filter.isProfane(msg.content))
-            rcon.send('set command "badword ' + msg.authorID + '"');
+        if(msg.content.startsWith('"connect') && proxycheck != null) {
+            let ip = msg.content.split(' ')[1];
+            if(!checkedIPs.includes(ip)) {
+                let res = await proxycheck.check(ip, { vpn: true });
+                
+                if(res.status == 'ok' && res[ip].proxy == 'yes')
+                    rcon.send('set command "kickvpn ' + msg.authorID + '"');
+                else
+                    checkedIPs.push(ip);
+            }
+
+            return;
+        }
+
+        if(filter.isProfane(msg.content)) {
+            let cmd = (server.id == 'deathrun') ? 'badword ' + msg.authorID : 'set command "badword ' + msg.authorID + '"'
+            rcon.send(cmd);
+        }
 
         if(msg.content.startsWith('!report')) {
             let report = bot.helper.parseCommand(msg.content);
@@ -80,5 +101,5 @@ function readChat(bot, server) {
 }
 
 bot.config.servers.forEach(server => {
-    readChat(bot, server);
+    readChat(server);
 });

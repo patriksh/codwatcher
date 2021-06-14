@@ -4,6 +4,7 @@
     "color": "#00E098",
     "reportChannel": "Report alert channel ID",
     "banChannel": "Ban alert channel ID",
+    "proxycheck": "proxycheck.io API key for blocking VPN, leave empty to disable",
     "servers": [
         {
             "id": "dm",

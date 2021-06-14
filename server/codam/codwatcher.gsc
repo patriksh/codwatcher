@@ -1,23 +1,4 @@
 /*
- * vCoD Discord Bot
- * github.com/dftd  |  Defected#0001
-*/
-
-/*
-Setup with MiscMod:
-
-1. Open 'codam/_mm_commands.gsc'
-2. Search for 'str = codam\_mm_mmm::strip(str);'
-3. Add the following code above that line:
-
-    if(!self codam\vcod_discord::message(str)) {
-        creturn();
-        return;
-    }
-*/
-
-
-/*
  * Register callbacks & commands.
 */
 main(phase, register) {
@@ -32,7 +13,7 @@ main(phase, register) {
 }
 
 init(register) {
-    file = getCvar("fs_basepath") + "/main/vcod-discord.log";
+    file = getCvar("fs_basepath") + "/main/codwatcher.log";
 
     if(!isDefined(level.dftd)) level.dftd = [];
 
@@ -45,14 +26,16 @@ init(register) {
     level.dftd["chatmute"].unmute = getCvarInt("dftd_chatmute_unmute");              // Seconds until automated unmute (may differ if sv_fps is changed).
 
     [[ register ]] ("gt_endMap", ::clearChatLog, "thread");
+    [[ register ]] ("PlayerConnect", ::logConnect, "thread");
 }
 
 load() {
     _F = level.codam_f_commander;
     if(!isDefined(_F)) return;
 
-    name = "codam/vCoD-Discord";
+    name = "codam/CoDWatcher";
     [[ _F ]] (name, "badword", ::badWord, "nowait");
+    [[ _F ]] (name, "kickvpn", ::kickVPN, "nowait");
 }
 
 /*
@@ -125,6 +108,20 @@ badWord(args, a1) {
 }
 
 /*
+ * Called when node.js app detects a VPN client to kick them.
+*/
+kickVPN(args, a1) {
+    if(!isDefined(args) || (args.size < 2)) return;
+    player = codam\utils::playerFromId(args[1]);
+    if(!isDefined(player)) return;
+
+    wait 5; // If the player takes longer to connect it doesn't kick them(?)
+
+    message = "To connect please turn ^1off^7 your VPN/Proxy."
+    player dropclient(message);
+}
+
+/*
  * Called after a player is muted. This will automatically unmute them after X seconds.
 */
 unmuteTimer() {
@@ -155,6 +152,15 @@ logMessage(msg) {
         if(f != -1) fwrite(line, f);
         fclose(f);
     }
+}
+
+/*
+ * Log when user connects to check for VPN.
+*/
+logConnect(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, b0, b1, b2, b2, b4, b5, b6, b7, b8, b9) {
+    msg  = "\"connect ";
+    msg += self getip();
+    self thread logMessage(msg);
 }
 
 /*
