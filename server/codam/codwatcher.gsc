@@ -117,7 +117,7 @@ kickVPN(args, a1) {
 
     wait 5; // If the player takes longer to connect it doesn't kick them(?)
 
-    message = "To connect please turn ^1off^7 your VPN/Proxy."
+    message = "To connect please turn ^1off^7 your VPN/Proxy.";
     player dropclient(message);
 }
 
