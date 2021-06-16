@@ -140,7 +140,6 @@ unmuteTimer() {
  * Log the message to be parsed by bad-word node.js app.
 */
 logMessage(msg) {
-    self iprintln(level.dftd["chatmute"].file);
     if(fexists(level.dftd["chatmute"].file)) {
         line = "";
         line += self getEntityNumber();
