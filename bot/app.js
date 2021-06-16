@@ -75,8 +75,7 @@ function readChat(server) {
         }
 
         if(filter.isProfane(msg.content)) {
-            let cmd = (server.id == 'deathrun') ? 'badword ' + msg.authorID : 'set command "badword ' + msg.authorID + '"'
-            rcon.send(cmd);
+            rcon.send('set command "badword ' + msg.authorID + '"');
         }
 
         if(msg.content.startsWith('!report')) {
