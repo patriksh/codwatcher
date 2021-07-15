@@ -60,15 +60,17 @@ function readChat(server) {
         let data = line.split('%');
         let msg = { authorID: data[0], authorName: data[1], content: data[2] };
 
-        if(msg.content.startsWith('"connect') && proxycheck != null) {
-            let ip = msg.content.split(' ')[1];
-            if(!checkedIPs.includes(ip)) {
-                let res = await proxycheck.check(ip, { vpn: true });
+        if(msg.content.startsWith('"connect')) {
+            if(proxycheck != null) {
+                let ip = msg.content.split(' ')[1];
+                if(!checkedIPs.includes(ip)) {
+                    let res = await proxycheck.check(ip, { vpn: true });
                 
-                if(res.status == 'ok' && res[ip].proxy == 'yes')
-                    rcon.send('set command "kickvpn ' + msg.authorID + '"');
-                else
-                    checkedIPs.push(ip);
+                    if(res.status == 'ok' && res[ip].proxy == 'yes')
+                        rcon.send('set command "kickvpn ' + msg.authorID + '"');
+                    else
+                        checkedIPs.push(ip);
+                }
             }
 
             return;
