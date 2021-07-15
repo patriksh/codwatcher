@@ -125,7 +125,7 @@ kickVPN(args, a1) {
  * Called after a player is muted. This will automatically unmute them after X seconds.
 */
 unmuteTimer() {
-    self endon("disconnected");
+    self endon("disconnect");
     
     wait(level.dftd["chatmute"].unmute);
 
