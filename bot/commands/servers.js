@@ -19,7 +19,7 @@ module.exports = {
                             .setTitle(status.name)
                             .addField('Players', status.players.length + '/' + status.maxplayers, true)
                             .addField('Map', status.map, true)
-                            .addField('Connect', status.connect, true)
+                            .addField('Connect', `<cod1x://${status.connect}>`, true)
                             .setThumbnail('https://image.gametracker.com/images/maps/160x120/cod/' + status.map + '.jpg')
                         );
                     } else {

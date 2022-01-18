@@ -11,7 +11,7 @@ module.exports = {
             .setTitle('CoD Watcher')
             .addField('Show servers', '`' + prefix + 'servers`', true)
             .addField('Show players', '`' + prefix + 'players <server>`', true)
-            .setFooter('Bot by defected.dev');
+            .setFooter('@dftd/codwatcher');
 
         msg.channel.send(embed);
     }

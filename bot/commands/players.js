@@ -33,6 +33,7 @@ module.exports = {
                         msg.channel.send(new Discord.MessageEmbed()
                             .setColor(bot.config.color)
                             .setTitle(status.name + ' players')
+                            .setDescription(`<cod1x://${status.connect}>`)
                             .addField('Name', players.name, true)
                             .addField('Kills', players.kill, true)
                             .addField('Ping', players.ping, true)
