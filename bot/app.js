@@ -80,14 +80,14 @@ function readChat(server) {
             rcon.send('set command "badword ' + msg.authorID + '"');
         }
 
-        if(msg.content.startsWith('!report')) {
+        if(msg.content.startsWith('!report ')) {
             let report = bot.helper.parseCommand(msg.content);
             let channel = bot.channels.cache.get(bot.config.reportChannel);
 
             return channel.send(`${server.name} | \`${report.player}\` has been reported by \`${msg.authorName}\` for \`${report.reason}\`.`);
         }
 
-        if(msg.content.startsWith('!ban')) {
+        if(msg.content.startsWith('!ban ')) {
             let ban = bot.helper.parseCommand(msg.content);
             let channel = bot.channels.cache.get(bot.config.banChannel);
 
